@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -20,7 +21,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-   protected $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'password',
@@ -61,7 +62,44 @@ class User extends Authenticatable
         return Str::of($this->name)
             ->explode(' ')
             ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->map(fn($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $model->created_by = Auth::id();
+        });
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return match ($this->role) {
+            'admin'   => 'Quản trị viên',
+            'manager' => 'Quản lý',
+            'staff'   => 'Nhân viên',
+            default   => 'Không xác định',
+        };
+    }
+
+    public function getStatusNameAttribute()
+    {
+        return match ($this->status) {
+            'active'   => 'Hoạt động',
+            'locked' => 'Bị khóa',
+            'pending'   => 'Đang chờ',
+            default   => 'Không xác định',
+        };
+    }
+
+    public function getStatusColorAttribute()
+    {
+        return match ($this->status) {
+            'active'   => 'green',
+            'locked' => 'red',
+            'pending'   => 'amber',
+            default   => 'Không xác định',
+        };
     }
 }

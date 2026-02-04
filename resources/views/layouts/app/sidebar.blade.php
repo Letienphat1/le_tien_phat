@@ -22,7 +22,7 @@
             </flux:sidebar.group>
 
             <flux:sidebar.group :heading="__('Quản lý')" class="grid">
-                <flux:sidebar.item icon="home" :href="route('admin.management.users')"
+                <flux:sidebar.item icon="user-group" :href="route('admin.management.users')"
                     :current="request()->routeIs('admin.management.users')" wire:navigate>
                     Người dùng
                 </flux:sidebar.item>

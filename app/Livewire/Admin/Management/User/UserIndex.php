@@ -6,6 +6,11 @@ use Livewire\Component;
 
 class UserIndex extends Component
 {
+    public function addUser(){
+        //dd('ok');
+        $this->dispatch('addUser');
+    }
+    
     public function render()
     {
         return view('livewire.admin.management.user.user-index');
