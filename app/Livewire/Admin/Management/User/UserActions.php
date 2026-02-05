@@ -13,17 +13,22 @@ class UserActions extends Component
 
     public $name, $email, $role, $status;
 
+    public $isUpdateUserMode = false;
+    public $userId = '';
+
     #[On('addUser')]
     public function addUser()
     {
         //dd('ok');
+        $this->isUpdateUserMode = false;
+        $this->resetData();
         Flux::modal('action-user')->show();
     }
 
     public function createUser()
     {
 
-    //dd($this->all());
+        //dd($this->all());
         $this->validate();
 
         User::create([
@@ -35,13 +40,102 @@ class UserActions extends Component
         ]);
         $this->modal('action-user')->close();
 
+        Flux::toast(
+            heading: 'Thành công',
+            text: 'Thêm người dùng thành công.',
+            variant: 'success',
+        );
+
+        $this->dispatch('reloadData');
+    }
+
+    #[On('editUser')]
+    public function editUser($id)
+    {
+        $this->resetData();
+        $user = User::findOrFail($id);
+
+        $this->userId = $user->id;
+
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->role = $user->role;
+        $this->status = $user->status;
+
+        $this->isUpdateUserMode = true;
+        Flux::modal('action-user')->show();
+    }
+
+    public function updateUser()
+    {
+        $this->validate();
+
+        $user = User::findOrFail($this->userId);
+
+        $user->update([
+            'name' => $this->name,
+            'email' => $this->email,
+            'role' => $this->role,
+            'status' => $this->status,
+        ]);
+        $this->modal('action-user')->close();
+
+        Flux::toast(
+            heading: 'Thành công',
+            text: 'Cập nhật người dùng thành công.',
+            variant: 'success',
+        );
+
+        $this->dispatch('reloadData');
+    }
+
+    #[On('deleteUser')]
+    public function deleteUser($id) {
+        $user = User::findOrFail($id);
+
+        $this->userId = $user->id;
+
+        $this->name = $user->name;
+
+        Flux::modal('delete-user')->show();
+
+    }
+
+    public function deleteUserConfirm()
+    {
+        $user = User::findOrFail($this->userId);
+
+        $user->delete();
+
+        Flux::toast(
+            heading: 'Thành công',
+            text: 'Xoá người dùng thành công.',
+            variant: 'success',
+        );
+
+        Flux::modal('delete-user')->close();
+
+         $this->dispatch('reloadData');
+    }
+
+    public function resetData()
+    {
+        $this->reset([
+            'name',
+            'email',
+            'role',
+            'status',
+            'userId'
+        ]);
+        $this->isUpdateUserMode = false;
+        $this->resetErrorBag();
     }
 
     protected function rules()
     {
         return [
             'name' => 'required|max:255',
-            'email' => 'required|max:255|unique:users,email',
+            'email' => 'required|max:255|unique:users,email,' . ($this->userId ?? ''),
             'role' => 'required|in:admin,manager,staff',
             'status' => 'required|in:active,locked,pending',
         ];

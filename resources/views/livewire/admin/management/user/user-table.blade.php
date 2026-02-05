@@ -1,93 +1,76 @@
 <div>
-    <flux:card class="my-2">
-        <div class="grid grid-cols-12 gap-4 items-center">
+    <div wire:loading class='w-full' >
+        @include('components.placeholder.management-user')
+    </div>
 
-            <!-- Industry -->
-            <div class="col-span-3">
-                <flux:input label="Tìm kiếm" placeholder="Tên / Email ..." />
-            </div>
-            <!-- Sort -->
-            <div class="col-span-3">
-                <flux:select variant="listbox" placeholder="Chọn chức vụ" label='Lọc theo chức vụ'>
-                    <flux:select.option value="name">Tên / Email</flux:select.option>
-                    <flux:select.option value="role">Chức vụ</flux:select.option>
-                </flux:select>
-            </div>
+    <flux:card class="my-2" wire:loading.remove >
+        {{-- Desktop --}}
+        <div class="hidden lg:block">
+            <flux:table>
+                <flux:table.columns>
+                    <flux:table.column class="w-[50px]" align="center">STT</flux:table.column>
+                    <flux:table.column class="w-[220px]">Họ và tên</flux:table.column>
+                    <flux:table.column class="w-[260px]">Email</flux:table.column>
+                    <flux:table.column class="w-[160px]">Chức vụ</flux:table.column>
+                    <flux:table.column class="w-[140px]">Trạng thái</flux:table.column>
+                    <flux:table.column class="w-[120px]" align="center">Thao tác</flux:table.column>
+                </flux:table.columns>
 
-            <!-- Trạng thái -->
-            <div class="col-span-3">
-                <flux:select variant="listbox" placeholder="Trạng thái" label='Lọc theo trạng thái'>
-                    <flux:select.option value="active">Đang hoạt động</flux:select.option>
-                    <flux:select.option value="deleted">Đã xoá</flux:select.option>
-                </flux:select>
-            </div>
-
-            <!-- Reset -->
-            <div class="col-span-3 flex justify-end">
-                <flux:button icon="arrow-path" variant="primary" color="rose" :loading="false">
-                    Reset
-                </flux:button>
-            </div>
+                <flux:table.rows>
+                    @forelse ($users as $user)
+                        <flux:table.row wire:key="desktop-{{ $user->id }}">
+                            <flux:table.cell align="center">
+                                {{ $users->firstItem() + $loop->index }}
+                            </flux:table.cell>
+                            <flux:table.cell>{{ $user->name }}</flux:table.cell>
+                            <flux:table.cell>{{ $user->email }}</flux:table.cell>
+                            <flux:table.cell>{{ $user->role_name }}</flux:table.cell>
+                            <flux:table.cell>
+                                <flux:badge color="{{ $user->status_color }}">
+                                    {{ $user->status_name }}
+                                </flux:badge>
+                            </flux:table.cell>
+                            <flux:table.cell align="center">
+                                <flux:dropdown>
+                                    <flux:button icon="ellipsis-horizontal" />
+                                    <flux:menu>
+                                        <flux:menu.item wire:click='editUser({{ $user->id }})'>Sửa</flux:menu.item>
+                                        <flux:separator />
+                                        <flux:menu.item variant="danger" wire:click='deleteUser({{ $user->id }})'>Xóa</flux:menu.item>
+                                    </flux:menu>
+                                </flux:dropdown>
+                            </flux:table.cell>
+                        </flux:table.row>
+                    @empty
+                        <flux:table.row>
+                            <flux:table.cell colspan="6" class="text-center py-8 text-zinc-500">
+                                Không có dữ liệu
+                            </flux:table.cell>
+                        </flux:table.row>
+                    @endforelse
+                </flux:table.rows>
+            </flux:table>
         </div>
-    </flux:card>
 
-    <flux:card class=" my-2">
-        <flux:table>
-            <flux:table.columns>
-                <flux:table.column>Họ và tên</flux:table.column>
-                <flux:table.column>Email</flux:table.column>
-                <flux:table.column>Chức vụ</flux:table.column>
-                <flux:table.column>Trạng thái</flux:table.column>
-                <flux:table.column>Thao tác</flux:table.column>
-            </flux:table.columns>
+        {{-- Mobile --}}
+        <div class="lg:hidden space-y-3">
+            <flux:accordion>
+                @foreach ($users as $user)
+                    <flux:accordion.item>
+                        <flux:accordion.heading>
+                            {{ $user->name }}
+                        </flux:accordion.heading>
+                        <flux:accordion.content>
+                            <div class="text-sm space-y-2">
+                                <div>Email: {{ $user->email }}</div>
+                                <div>Chức vụ: {{ $user->role_name }}</div>
+                            </div>
+                        </flux:accordion.content>
+                    </flux:accordion.item>
+                @endforeach
+            </flux:accordion>
+        </div>
 
-            <flux:table.rows>
-
-                @forelse ($users as $user)
-                    <flux:table.row wire:key='{{ $user->id }}'>
-                        <flux:table.cell>{{ $user->name }}</flux:table.cell>
-                        <flux:table.cell>{{ $user->email }}</flux:table.cell>
-                        <flux:table.cell>{{ $user->role_name }}</flux:table.cell>
-                        <flux:table.cell>
-                            <flux:badge variant="solid" color="{{ $user->status_color }}"> {{ $user->status_name }}
-                            </flux:badge>
-                        </flux:table.cell>
-                        <flux:table.cell>
-                            <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" inset="top bottom">
-                            </flux:button>
-
-                            <flux:dropdown>
-
-                                <flux:popover class="flex flex-col gap-4">
-                                    <flux:button icon="adjustments-horizontal" icon:variant="micro"
-                                        icon:class="text-zinc-400" icon-trailing="chevron-down"
-                                        icon-trailing:variant="micro" icon-trailing:class="text-zinc-400">
-                                        Options
-                                    </flux:button>
-
-
-                                    <flux:separator variant="subtle" />
-
-                                    <flux:radio.group wire:model="view" label="View as"
-                                        label:class="text-zinc-500 dark:text-zinc-400">
-                                        <flux:radio value="list" label="List" checked />
-                                        <flux:radio value="gallery" label="Gallery" />
-                                    </flux:radio.group>
-
-                                    <flux:separator variant="subtle" />
-
-                                    <flux:button variant="subtle" size="sm" class="justify-start -m-2 px-2!">Reset
-                                        to default</flux:button>
-                                </flux:popover>
-                            </flux:dropdown>
-                        </flux:table.cell>
-                    </flux:table.row>
-                @empty
-                @endforelse
-
-
-
-            </flux:table.rows>
-        </flux:table>
+        <flux:pagination :paginator="$users" />
     </flux:card>
 </div>
