@@ -3,48 +3,43 @@
 namespace App\Livewire\Admin\Management\User;
 
 use App\Models\User;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Lazy]
 class UserTable extends Component
 {
     use WithPagination;
 
-    public $search = '';
-    public $role = '';
-    public $status = 'active';
-    public $perPage = 15;
+    #[Reactive]
+    public string $search = '';
+
+    #[Reactive]
+    public string $role = '';
+
+    #[Reactive]
+    public string $status = 'active';
+
+    #[Reactive]
+    public string $perPage = '15';
 
     public function placeholder()
     {
         return view('components.placeholder.management-user');
     }
 
-    #[On('filterUser')]
-    public function filterUser($filter)
-    {
-        $this->search  = $filter['search']  ?? '';
-        $this->role    = $filter['role']    ?? '';
-        $this->status  = $filter['status']  ?? 'active';
-        $this->perPage = $filter['perPage'] ?? 15;
-
-        $this->resetPage();
-    }
-
-    public function editUser($id)
-    {
-        $this->dispatch('editUser',$id);
-    }
-
-    public function deleteUser($id)
-    {
-        $this->dispatch('deleteUser',$id);
-    }
-
     #[On('reloadData')]
+    public function reloadData()
+    {
+        // Event hook to refresh table after create/update/delete.
+    }
+
     public function render()
     {
+        sleep(3);
         $users = User::query()
             ->when(
                 $this->search,
@@ -57,7 +52,7 @@ class UserTable extends Component
             )
             ->when($this->role, fn($q) => $q->where('role', $this->role))
             ->when($this->status, fn($q) => $q->where('status', $this->status))
-            ->paginate($this->perPage);
+            ->paginate((int) $this->perPage);
 
         return view('livewire.admin.management.user.user-table', [
             'users' => $users,

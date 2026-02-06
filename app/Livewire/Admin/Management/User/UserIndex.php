@@ -6,35 +6,14 @@ use Livewire\Component;
 
 class UserIndex extends Component
 {
-    public $search = '';
-    public $role = '';
-    public $status = 'active';
-    public $perPage = '15';
-
-    public function updated($property)
-    {
-        if (! in_array($property, ['search', 'role', 'status', 'perPage'])) {
-            return;
-        }
-
-        $this->dispatch('filterUser', [
-            'search'  => $this->search,
-            'role'    => $this->role,
-            'status'  => $this->status,
-            'perPage' => $this->perPage,
-        ]);
-    }
+    public string $search = '';
+    public string $role = '';
+    public string $status = 'active';
+    public string $perPage = '15';
 
     public function resetFilter()
     {
         $this->reset(['search', 'role', 'status', 'perPage']);
-
-        $this->dispatch('filterUser', [
-            'search'  => '',
-            'role'    => '',
-            'status'  => 'active',
-            'perPage' => '15',
-        ]);
     }
 
     public function addUser()

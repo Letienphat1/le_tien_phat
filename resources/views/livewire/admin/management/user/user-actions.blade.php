@@ -7,7 +7,7 @@
                 <flux:text class="mt-2">Quản lý người dùng trong hệ thống</flux:text>
             </div>
 
-            <flux:input label="Họ và tên" placeholder="Nhập tên" wire:model='name' />
+            <flux:input label="Họ và tên" placeholder="Nhập tên" wire:model.live='name' />
 
             <flux:input type="email" label="Địa chỉ Email" wire:model='email' />
 

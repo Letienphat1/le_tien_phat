@@ -90,7 +90,8 @@ class UserActions extends Component
     }
 
     #[On('deleteUser')]
-    public function deleteUser($id) {
+    public function deleteUser($id)
+    {
         $user = User::findOrFail($id);
 
         $this->userId = $user->id;
@@ -98,7 +99,6 @@ class UserActions extends Component
         $this->name = $user->name;
 
         Flux::modal('delete-user')->show();
-
     }
 
     public function deleteUserConfirm()
@@ -115,7 +115,7 @@ class UserActions extends Component
 
         Flux::modal('delete-user')->close();
 
-         $this->dispatch('reloadData');
+        $this->dispatch('reloadData');
     }
 
     public function resetData()
@@ -157,6 +157,15 @@ class UserActions extends Component
             'status.required' => 'Vui lòng chọn trạng thái.',
             'status.in' => 'Trạng thái không hợp lệ.',
         ];
+    }
+
+    public function updatedName($value)
+    {
+        if ($value) {
+            $this->resetErrorBag('name');
+        }else{
+            $this->addError('name','Họ và tên là bắt buộc.');
+        }
     }
 
     public function render()
