@@ -13,7 +13,7 @@
     </flux:card>
 
     {{-- Actions --}}
-    <livewire:admin.management.user.user-actions lazy/>
+    <livewire:admin.management.user.user-actions lazy />
 
     {{-- ✅ Lazy table --}}
     <flux:card class="my-2">
@@ -54,14 +54,15 @@
 
             <!-- Reset -->
             <div class="col-span-1">
-                <flux:button icon="arrow-path" variant="primary" color="rose" :loading="false"
-                    wire:click='resetFilter()' class="md:mt-6">
+                <flux:button icon="arrow-path" variant="primary" color="rose" wire:click='resetFilter()'
+                    class="md:mt-6">
                     Reset
                 </flux:button>
             </div>
         </div>
     </flux:card>
-    
-    <livewire:admin.management.user.user-table lazy />
-    
+
+    <livewire:admin.management.user.user-table :search="$search" :role="$role" :status="$status" :perPage="$perPage"
+        wire:key="users-table-{{ md5($search . '|' . $role . '|' . $status . '|' . $perPage ) }}" />
+
 </div>
