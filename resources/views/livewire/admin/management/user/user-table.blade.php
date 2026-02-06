@@ -23,7 +23,7 @@
                                 {{ $users->firstItem() + $loop->index }}
                             </flux:table.cell>
                             <flux:table.cell>{{ $user->name }}</flux:table.cell>
-                            <flux:table.cell>{{ $user->email }}</flux:table.cell>
+                            <flux:table.cell>{{ $user->description }}</flux:table.cell>
                             <flux:table.cell>{{ $user->role_name }}</flux:table.cell>
                             <flux:table.cell>
                                 <flux:badge color="{{ $user->status_color }}">

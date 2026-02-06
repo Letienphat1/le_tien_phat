@@ -2,9 +2,9 @@
     <flux:modal name="action-user" class="md:w-96">
         <form wire:submit.prevent='{{ $isUpdateUserMode ? 'updateUser()' : 'createUser()' }}' class="space-y-6">
             <div>
-                <flux:heading size="lg">{{ $isUpdateUserMode ? 'Cập nhật người dùng' : 'Thêm mới ngừoi dùng' }}
+                <flux:heading size="lg">{{ $isUpdateUserMode ? 'Cập nhật người dùng' : 'Thêm mới người dùng' }}
                 </flux:heading>
-                <flux:text class="mt-2">Quản lý người dùng tỏng hệ thống</flux:text>
+                <flux:text class="mt-2">Quản lý người dùng trong hệ thống</flux:text>
             </div>
 
             <flux:input label="Họ và tên" placeholder="Nhập tên" wire:model='name' />

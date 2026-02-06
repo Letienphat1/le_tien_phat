@@ -27,6 +27,13 @@
                     Người dùng
                 </flux:sidebar.item>
             </flux:sidebar.group>
+
+            <flux:sidebar.group :heading="__('Dự án')" class="grid">
+                <flux:sidebar.item icon="folder-kanban" :href="route('back.management.projects')"
+                    :current="request()->routeIs('back.management.projects')" wire:navigate>
+                    Quản lí dự án
+                </flux:sidebar.item>
+            </flux:sidebar.group>
         </flux:sidebar.nav>
 
         <flux:spacer />
