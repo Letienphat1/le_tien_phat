@@ -1,9 +1,6 @@
 <div>
-    <div wire:loading class='w-full' >
-        @include('components.placeholder.management-user')
-    </div>
 
-    <flux:card class="my-2" wire:loading.remove >
+    <flux:card class="my-2"  >
         {{-- Desktop --}}
         <div class="hidden lg:block">
             <flux:table>
@@ -34,9 +31,9 @@
                                 <flux:dropdown>
                                     <flux:button icon="ellipsis-horizontal" />
                                     <flux:menu>
-                                        <flux:menu.item wire:click='editUser({{ $user->id }})'>Sửa</flux:menu.item>
+                                        <flux:menu.item wire:click="$dispatch('editUser', { id: {{ $user->id }} })">Sửa</flux:menu.item>
                                         <flux:separator />
-                                        <flux:menu.item variant="danger" wire:click='deleteUser({{ $user->id }})'>Xóa</flux:menu.item>
+                                        <flux:menu.item variant="danger" wire:click="$dispatch('deleteUser', { id: {{ $user->id }} })">Xóa</flux:menu.item>
                                     </flux:menu>
                                 </flux:dropdown>
                             </flux:table.cell>
@@ -71,9 +68,6 @@
             </flux:accordion>
         </div>
 
-        @if ($users->count() > 1)
-            <flux:pagination :paginator="$users" />
-        @endif
-        
+        <flux:pagination :paginator="$users" />
     </flux:card>
 </div>

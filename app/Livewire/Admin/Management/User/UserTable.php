@@ -31,26 +31,6 @@ class UserTable extends Component
         return view('components.placeholder.management-user');
     }
 
-    public function updatedSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatedRole()
-    {
-        $this->resetPage();
-    }
-
-    public function updatedStatus()
-    {
-        $this->resetPage();
-    }
-
-    public function updatedPerPage()
-    {
-        $this->resetPage();
-    }
-
     #[On('reloadData')]
     public function reloadData()
     {
@@ -59,7 +39,6 @@ class UserTable extends Component
 
     public function render()
     {
-        sleep(3);
         $users = User::query()
             ->when(
                 $this->search,
