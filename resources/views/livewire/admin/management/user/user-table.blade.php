@@ -71,6 +71,9 @@
             </flux:accordion>
         </div>
 
-        <flux:pagination :paginator="$users" />
+        @if ($users->count() > 1)
+            <flux:pagination :paginator="$users" />
+        @endif
+        
     </flux:card>
 </div>

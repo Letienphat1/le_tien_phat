@@ -63,6 +63,6 @@
     </flux:card>
 
     <livewire:admin.management.user.user-table :search="$search" :role="$role" :status="$status" :perPage="$perPage"
-        wire:key="users-table-{{ md5($search . '|' . $role . '|' . $status . '|' . $perPage ) }}" />
+        wire:key="users-table-{{ md5($search . '|' . $role . '|' . $status . '|' . $perPage ) }}"  />
 
 </div>
