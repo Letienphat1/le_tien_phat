@@ -71,7 +71,7 @@ class UserActions extends Component
         $this->validate();
 
         $user = User::findOrFail($this->userId);
-
+                sleep(3);
         $user->update([
             'name' => $this->name,
             'email' => $this->email,

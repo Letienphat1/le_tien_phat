@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin\Management\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
@@ -26,20 +28,23 @@ class UserTable extends Component
     #[Reactive]
     public string $perPage = '15';
 
+    protected $queryString = [];
+
     public function placeholder()
     {
         return view('components.placeholder.management-user');
     }
 
-    #[On('reloadData')]
-    public function reloadData()
+    #[On('resetPageData')]
+    public function resetPageData()
     {
-        // Event hook to refresh table after create/update/delete.
+        $this->resetPage();
     }
 
-    public function render()
+    #[Computed]
+    public function users()
     {
-        $users = User::query()
+        return User::query()
             ->when(
                 $this->search,
                 fn($q) =>
@@ -52,9 +57,10 @@ class UserTable extends Component
             ->when($this->role, fn($q) => $q->where('role', $this->role))
             ->when($this->status, fn($q) => $q->where('status', $this->status))
             ->paginate((int) $this->perPage);
+    }
 
-        return view('livewire.admin.management.user.user-table', [
-            'users' => $users,
-        ]);
+    public function render()
+    {
+        return view('livewire.admin.management.user.user-table');
     }
 }

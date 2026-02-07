@@ -1,6 +1,6 @@
 <div>
 
-    <flux:card class="my-2"  >
+    <flux:card class="my-2">
         {{-- Desktop --}}
         <div class="hidden lg:block">
             <flux:table>
@@ -14,10 +14,10 @@
                 </flux:table.columns>
 
                 <flux:table.rows>
-                    @forelse ($users as $user)
+                    @forelse ($this->users as $user)
                         <flux:table.row wire:key="desktop-{{ $user->id }}">
                             <flux:table.cell align="center">
-                                {{ $users->firstItem() + $loop->index }}
+                                {{ $this->users->firstItem() + $loop->index }}
                             </flux:table.cell>
                             <flux:table.cell>{{ $user->name }}</flux:table.cell>
                             <flux:table.cell>{{ $user->email }}</flux:table.cell>
@@ -31,9 +31,12 @@
                                 <flux:dropdown>
                                     <flux:button icon="ellipsis-horizontal" />
                                     <flux:menu>
-                                        <flux:menu.item wire:click="$dispatch('editUser', { id: {{ $user->id }} })">Sửa</flux:menu.item>
+                                        <flux:menu.item wire:click="$dispatch('editUser', { id: {{ $user->id }} })">
+                                            Sửa</flux:menu.item>
                                         <flux:separator />
-                                        <flux:menu.item variant="danger" wire:click="$dispatch('deleteUser', { id: {{ $user->id }} })">Xóa</flux:menu.item>
+                                        <flux:menu.item variant="danger"
+                                            wire:click="$dispatch('deleteUser', { id: {{ $user->id }} })">Xóa
+                                        </flux:menu.item>
                                     </flux:menu>
                                 </flux:dropdown>
                             </flux:table.cell>
@@ -52,7 +55,7 @@
         {{-- Mobile --}}
         <div class="lg:hidden space-y-3">
             <flux:accordion>
-                @foreach ($users as $user)
+                @foreach ($this->users as $user)
                     <flux:accordion.item>
                         <flux:accordion.heading>
                             {{ $user->name }}
@@ -68,6 +71,10 @@
             </flux:accordion>
         </div>
 
-        <flux:pagination :paginator="$users" />
+        @if ($this->users->hasPages())
+            <flux:pagination :paginator="$this->users" />
+        @endif
+
+
     </flux:card>
 </div>

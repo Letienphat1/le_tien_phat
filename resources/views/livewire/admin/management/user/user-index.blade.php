@@ -21,7 +21,7 @@
 
             <!-- Industry -->
             <div class="col-span-2">
-                <flux:input label="Tìm kiếm" placeholder="Tên / Email ..." wire:model.live.debounce.500ms='search' />
+                <flux:input label="Tìm kiếm" placeholder="Tên / Email ..." wire:model.live.debounce.500ms='search' clearable/>
             </div>
             <!-- Sort -->
             <div class="col-span-2">
