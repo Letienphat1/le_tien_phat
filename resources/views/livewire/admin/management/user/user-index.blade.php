@@ -43,7 +43,7 @@
                     <flux:select.option value="pending">Đang chờ</flux:select.option>
                 </flux:select>
             </div>
-            <div class="col-span-1">
+            <div class="col-span-2">
                 <flux:select variant="listbox" placeholder="Số dòng..." label='Số dòng/trang' wire:model.lazy='perPage'>
                     <flux:select.option value='15'>15</flux:select.option>
                     <flux:select.option value='30'>30</flux:select.option>

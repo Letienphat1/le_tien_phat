@@ -39,7 +39,7 @@ class UserTable extends Component
 
     public function render()
     {
-        sleep(3);
+
         $users = User::query()
             ->when(
                 $this->search,

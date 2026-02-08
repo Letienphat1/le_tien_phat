@@ -1,5 +1,5 @@
 <div>
-    <flux:modal name="action-user" class="md:w-96">
+    <flux:modal name="action-user" class="md:w-400">
         <form wire:submit.prevent='{{ $isUpdateUserMode ? 'updateUser()' : 'createUser()' }}' class="space-y-6">
             <div>
                 <flux:heading size="lg">{{ $isUpdateUserMode ? 'Cập nhật người dùng' : 'Thêm mới người dùng' }}
