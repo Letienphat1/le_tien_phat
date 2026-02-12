@@ -6,8 +6,17 @@ use Livewire\Component;
 
 class ProjectIndex extends Component
 {
+    public string $search = '';
 
-    public function addProject(){
+    public string $status = '';
+
+    public function resetFilter()
+    {
+        $this->reset(['status', 'search']);
+    }
+
+    public function addProject()
+    {
         //dd('ok');
         $this->dispatch('addProject');
     }

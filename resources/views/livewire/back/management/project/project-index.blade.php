@@ -20,12 +20,13 @@
 
             <!-- Tìm kiếm -->
             <div class="w-full md:w-64">
-                <flux:input label="Tìm kiếm" placeholder="Tên dự án..." />
+                <flux:input label="Tìm kiếm" placeholder="Tên dự án..." wire:model.live="search" />
             </div>
 
             <!-- Trạng thái -->
             <div class="w-full md:w-64">
-                <flux:select variant="listbox" placeholder="Trạng thái" label="Lọc theo trạng thái">
+                <flux:select variant="listbox" placeholder="Trạng thái" label="Lọc theo trạng thái" wire:model.lazy='status'>
+                    <flux:select.option value="">Tất cả trạng thái</flux:select.option>
                     <flux:select.option value="pending">Đang chờ</flux:select.option>
                     <flux:select.option value="progress">Đang làm</flux:select.option>
                     <flux:select.option value="done">Đã xong</flux:select.option>
@@ -43,5 +44,5 @@
     </flux:card>
 
     {{-- Table --}}
-    <livewire:back.management.project.project-table />
+    <livewire:back.management.project.project-table :search="$search" :status="$status" wire:key="projects-table-{{ md5($search . '|' . $status) }}"/>
 </div>

@@ -43,7 +43,7 @@
                     </div>
                     {{-- Content --}}
                     <div class="flex flex-col gap-3">
-                        
+
                         <div class="flex items-start justify-between gap-2">
                             <div class="font-semibold text-base leading-tight line-clamp-2">{{ $project->name }}</div>
                         </div>

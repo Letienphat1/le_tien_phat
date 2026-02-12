@@ -2,18 +2,21 @@
 
 namespace App\Livewire\Back\Management\Project;
 
-use Flux\Flux;
 use App\Models\Project;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use Livewire\Attributes\Reactive;
 
 class ProjectTable extends Component
 {
-    public $name, $description, $status, $date_deadline, $time_deadline;
-    public $projectId = '';
-    public $isUpdateProject = false;
     use WithPagination;
+
+    #[Reactive]
+    public string $search = '';
+
+    #[Reactive]
+    public string $status = 'pending';
 
     #[On('reloadData')]
     public function reloadData()
@@ -31,9 +34,20 @@ class ProjectTable extends Component
         $this->dispatch('deleteProject', $id);
     }
 
+
     public function render()
     {
-        $projects = Project::get();
+        $projects = Project::query()
+            ->when(
+                $this->search,
+                fn($q) =>
+                $q->where(
+                    fn($q) =>
+                    $q->where('name', 'like', "%{$this->search}%")
+                )
+            )
+            ->when($this->status, fn($q) => $q->where('status', $this->status))
+            ->get();
         return view(
             'livewire.back.management.project.project-table',
             [

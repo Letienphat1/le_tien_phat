@@ -21,17 +21,17 @@
                 </flux:sidebar.item>
             </flux:sidebar.group>
 
-            <flux:sidebar.group :heading="__('Quản lý')" class="grid">
+            <flux:sidebar.group :heading="__('Quản lý người dùng')" class="grid">
                 <flux:sidebar.item icon="user-group" :href="route('admin.management.users')"
                     :current="request()->routeIs('admin.management.users')" wire:navigate>
                     Người dùng
                 </flux:sidebar.item>
             </flux:sidebar.group>
 
-            <flux:sidebar.group :heading="__('Dự án')" class="grid">
+            <flux:sidebar.group :heading="__('Quản lí dự án')" class="grid">
                 <flux:sidebar.item icon="folder-kanban" :href="route('back.management.projects')"
                     :current="request()->routeIs('back.management.projects')" wire:navigate>
-                    Quản lí dự án
+                    Dự án
                 </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>

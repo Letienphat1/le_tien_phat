@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Management\User\UserIndex;
 use App\Livewire\Back\Management\Project\ProjectIndex;
+use App\Livewire\Back\Management\Task\TaskIndex;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,5 +24,6 @@ Route::prefix('back')->middleware('auth')->name('back.')->group(function () {
         Route::livewire('projects', ProjectIndex::class)->name('projects');
     });
 });
+
 
 require __DIR__ . '/settings.php';
