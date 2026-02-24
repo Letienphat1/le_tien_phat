@@ -5,6 +5,7 @@ namespace App\Livewire\Back\Management\Project;
 use App\Models\Project;
 use Flux\Flux;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
@@ -36,6 +37,7 @@ class ProjectActions extends Component
         Project::create([
             'name' => $this->name,
             'description' => $this->description,
+            'created_by' => Auth::id(),
         ]);
         Flux::modal('action-project')->close();
 
@@ -89,7 +91,7 @@ class ProjectActions extends Component
         $this->dispatch('reloadData');
     }
 
-    
+
     #[On('deleteProject')]
     public function deleteProject($id)
     {

@@ -9,19 +9,8 @@
 
                 <flux:input label="Mô tả" wire:model='description' />
 
-                <flux:select variant="listbox" placeholder="Chọn trạng thái" label="Trạng thái" wire:model='status' :disabled='!$isUpdateProject'>
-
-                    <flux:select.option value='active'>
-                        <div class="flex items-center gap-2">
-                            <flux:icon.check-badge variant="mini" class="text-zinc-400" /> Hoạt động
-                        </div>
-                    </flux:select.option>
-
-                    <flux:select.option value='locked'>
-                        <div class="flex items-center gap-2">
-                            <flux:icon.no-symbol variant="mini" class="text-zinc-400" /> Bị khóa
-                        </div>
-                    </flux:select.option>
+                <flux:select variant="listbox" placeholder="Chọn trạng thái" label="Trạng thái" wire:model='status'
+                    :disabled='!$isUpdateProject'>
 
                     <flux:select.option value='pending'>
                         <div class="flex items-center gap-2">
@@ -29,14 +18,27 @@
                         </div>
                     </flux:select.option>
 
-                </flux:select> 
+                    <flux:select.option value='progress'>
+                        <div class="flex items-center gap-2">
+                            <flux:icon.ellipsis-horizontal variant="mini" class="text-zinc-400" /> Đang làm
+                        </div>
+                    </flux:select.option>
+
+                    <flux:select.option value='done'>
+                        <div class="flex items-center gap-2">
+                            <flux:icon.check-badge variant="mini" class="text-zinc-400" /> Đã xong
+                        </div>
+                    </flux:select.option>
+
+                </flux:select>
 
                 @if ($isUpdateProject)
                     <div class="grid grid-cols-2 gap-4">
-                        <flux:date-picker label="Ngày" wire:model='date_deadline' :min='now()->addDay()->toDateString()'/>
+                        <flux:date-picker label="Ngày" wire:model='date_deadline'
+                            :min='now()->addDay()->toDateString()' />
 
                         <flux:time-picker label="Thời gian" type="input" wire:model='time_deadline' />
-                        
+
                     </div>
                 @endif
 

@@ -17,6 +17,17 @@ class Project extends Model
         'deadline_at',
     ];
 
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+
+    protected $casts = [
+        'deadline_at' => 'datetime',
+    ];
+
+
     public function getStatusNameProjectAttribute()
     {
         return match ($this->status) {
@@ -38,8 +49,7 @@ class Project extends Model
     }
 
     public function tasks()
-{
-    return $this->hasMany(Task::class)->orderBy('ordering');
-}
-
+    {
+        return $this->hasMany(Task::class)->orderBy('ordering');
+    }
 }

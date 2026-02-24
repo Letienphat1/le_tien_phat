@@ -18,7 +18,7 @@
                             hover:-translate-y-1
                             hover:border-pink-300
                             hover:shadow-lg hover:shadow-pink-300/40">
-                    {{-- Menu ... --}}
+                    {{-- sửa xóa --}}
                     <div class="absolute top-2 right-2 z-10">
                         <flux:dropdown>
                             <flux:button icon="ellipsis-horizontal" variant="ghost" size="sm" icon-only
@@ -26,7 +26,11 @@
 
                             <flux:menu class="min-w-[140px]">
                                 <flux:menu.item wire:click='editProject({{ $project->id }})'
-                                    class="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded-md">
+                                    class="flex items-center gap-2 px-3 py-2
+                                            text-blue-600SSS
+                                            hover:bg-blue-50
+                                            hover:text-blue-700
+                                            rounded-md transition">
                                     <flux:icon name="pencil-square" class="w-4 h-4" />
                                     Sửa
                                 </flux:menu.item>
@@ -41,25 +45,40 @@
                             </flux:menu>
                         </flux:dropdown>
                     </div>
-                    {{-- Content --}}
-                    <div class="flex flex-col gap-3">
+                    {{-- project --}}
+                    <div class="flex flex-col gap-3 h-full">
 
                         <div class="flex items-start justify-between gap-2">
-                            <div class="font-semibold text-base leading-tight line-clamp-2">{{ $project->name }}</div>
+                            <div class="font-semibold text-base leading-tight line-clamp-2">
+                                {{ $project->name }}
+                            </div>
                         </div>
 
                         <div class="text-sm text-gray-500 line-clamp-2">
-                            {{ $project->description ?: 'Không có mô tả.' }}
+                            {{ $project->description ?? '' }}
                         </div>
 
-                        {{-- Deadline --}}
-                        @if ($project->deadline_at)
-                            <div class="flex items-center gap-2 text-xs text-gray-400 mt-1">
-                                <flux:icon name="calendar-days" class="w-4 h-4" />
-                                {{ \Carbon\Carbon::parse($project->deadline_at)->format('d/m/Y H:i') }}
-                            </div>
-                        @endif
+                        <div class="flex items-center gap-2 text-xs text-gray-400">
+                            <flux:icon name="user" class="w-4 h-4" />
+                            <span>{{ $project->creator?->name ?? '' }}</span>
+                        </div>
+
+                        <div class="flex items-center gap-2 text-xs text-gray-400">
+                            <flux:icon name="calendar-days" class="w-4 h-4" />
+                            <span>
+                                {{ $project->deadline_at?->format('d/m/Y H:i') ?? '' }}
+                            </span>
+                        </div>
+
+                        <div class="mt-auto">
+                            <flux:badge class="w-full justify-center text-xs px-2 py-1 font-medium"
+                                color="{{ $project->status_color_project }}">
+                                {{ $project->status_name_project }}
+                            </flux:badge>
+                        </div>
+
                     </div>
+
                 </flux:card>
             @empty
                 <div class="col-span-full text-center text-gray-500 py-12">

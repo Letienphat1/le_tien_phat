@@ -20,7 +20,7 @@
 
             <!-- Tìm kiếm -->
             <div class="w-full md:w-64">
-                <flux:input label="Tìm kiếm" placeholder="Tên dự án..." wire:model.live="search" />
+                <flux:input label="Tìm kiếm" placeholder="Tên dự án..." wire:model.live.debounce.500ms="search" />
             </div>
 
             <!-- Trạng thái -->
@@ -33,13 +33,14 @@
                 </flux:select>
             </div>
 
-            <!-- Reset -->
+
+            {{-- Reset  --}}
             {{-- <div class="ml-auto self-center">
                 <flux:button icon="arrow-path" variant="primary" color="rose" >
                     Reset
                 </flux:button>
             </div> --}}
-            
+
         </div>
     </flux:card>
 
