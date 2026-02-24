@@ -41,6 +41,12 @@ class ProjectActions extends Component
         ]);
         Flux::modal('action-project')->close();
 
+        Flux::toast(
+            heading: 'Thành công',
+            text: 'Thêm dự án thành công.',
+            variant: 'success',
+        );
+
         $this->dispatch('reloadData');
     }
 
@@ -88,6 +94,12 @@ class ProjectActions extends Component
         ]);
         $this->modal('action-project')->close();
 
+        Flux::toast(
+            heading: 'Thành công',
+            text: 'Cập nhận dự án thành công.',
+            variant: 'success',
+        );
+
         $this->dispatch('reloadData');
     }
 
@@ -113,6 +125,12 @@ class ProjectActions extends Component
         $project->delete();
 
         Flux::modal('delete-project')->close();
+
+        Flux::toast(
+            heading: 'Thành công',
+            text: 'Xóa dự án thành công.',
+            variant: 'success',
+        );
 
         $this->dispatch('reloadData');
     }
