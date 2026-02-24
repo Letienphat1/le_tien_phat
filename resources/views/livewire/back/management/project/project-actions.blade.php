@@ -55,7 +55,7 @@
             <div>
                 <flux:heading size="lg">Xoá dự án trong hệ thống?</flux:heading>
                 <flux:text class="mt-2">
-                    Bạn có chắc muốn xoá dự án này {{ $name }} này không?<br>
+                    Bạn có chắc muốn xoá dự án này <span class="font-bold">{{ $name }}</span> này không?<br>
                     Hành động này không thể hoàn tác.
                 </flux:text>
             </div>

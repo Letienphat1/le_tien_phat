@@ -1,14 +1,4 @@
 <div>
-    <div class="hidden lg:block">
-        <flux:table>
-            <flux:table.columns>
-
-                <flux:table.column class="text-xl flex justify-center">Không gian làm việc</flux:table.column>
-
-            </flux:table.columns>
-        </flux:table>
-    </div>
-
     <flux:card class="my-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             @forelse ($projects as $project)
