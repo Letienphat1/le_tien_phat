@@ -103,7 +103,6 @@ class ProjectActions extends Component
         $this->dispatch('reloadData');
     }
 
-
     #[On('deleteProject')]
     public function deleteProject($id)
     {
@@ -168,8 +167,6 @@ class ProjectActions extends Component
             'time_deadline.required' => 'Thời gian là bắt buộc.',
         ];
     }
-
-
 
     public function render()
     {

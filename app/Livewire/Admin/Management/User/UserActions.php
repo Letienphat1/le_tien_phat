@@ -27,7 +27,6 @@ class UserActions extends Component
 
     public function createUser()
     {
-
         //dd($this->all());
         $this->validate();
 
