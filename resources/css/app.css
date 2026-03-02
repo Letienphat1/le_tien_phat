@@ -64,3 +64,22 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+/* ===== Pink Scrollbar ===== */
+
+.pink-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(236,72,153,0.75) transparent;
+}
+
+.pink-scroll::-webkit-scrollbar {
+    height: 10px;
+}
+
+.pink-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.pink-scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(236, 72, 153, 0.75);
+    border-radius: 9999px;
+}

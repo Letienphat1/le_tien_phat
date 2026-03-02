@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            
+
             $table->foreignId('project_id') //xóa pro thì xóa hết task trong pro
                 ->constrained('projects')
                 ->cascadeOnDelete();
@@ -30,12 +30,12 @@ return new class extends Migration
                 ->nullable() // Người tạo
                 ->constrained('users');
 
-            $table->enum('priority', ['critical', 'high', 'medium', 'low', 'lowest',])->nullable(); //Mức độ ưu tiên 
+            $table->enum('priority', ['critical', 'high', 'medium', 'low', 'lowest',])->nullable(); //Mức độ ưu tiên
 
             $table->enum('status', ['todo', 'progress', 'review', 'done',])->default('todo'); //trạng thái, màu
 
-            $table->date('start_at')->nullable(); //Ngày bắt đầu 
-            $table->dateTime('deadline_at')->nullable(); //Deadline 
+            $table->date('start_at')->nullable(); //Ngày bắt đầu
+            $table->dateTime('deadline_at')->nullable(); //Deadline
             $table->dateTime('completed_at')->nullable(); //Thời gian hoàn thành
 
             $table->dateTime('remind_at')->nullable(); //Nhắc nhở

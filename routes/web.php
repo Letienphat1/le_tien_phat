@@ -21,9 +21,13 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
 Route::prefix('back')->middleware('auth')->name('back.')->group(function () {
     Route::prefix('management')->name('management.')->group(function () {
+
         Route::livewire('projects', ProjectIndex::class)->name('projects');
+
+        Route::livewire('project/{id}', TaskIndex::class)->name('project');
+
+
     });
 });
-
 
 require __DIR__ . '/settings.php';

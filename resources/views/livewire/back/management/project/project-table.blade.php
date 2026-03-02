@@ -1,8 +1,8 @@
 <div>
-    <flux:card class="my-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <flux:card class="my-4" >
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
             @forelse ($projects as $project)
-                <flux:card
+                <flux:card wire:click='selectProject({{ $project->id }})'
                     class="relative p-4 pr-10 rounded-xl cursor-pointer transition-all
                             border border-transparent
                             hover:-translate-y-1

@@ -70,4 +70,6 @@
 
         <flux:pagination :paginator="$users" />
     </flux:card>
+
+
 </div>

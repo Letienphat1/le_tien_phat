@@ -34,6 +34,15 @@ class ProjectTable extends Component
         $this->dispatch('deleteProject', $id);
     }
 
+    public function selectProject($id)
+    {
+        $this->redirectRoute(
+            'back.management.project',
+            ['id' => $id],
+            navigate: true
+        );
+    }
+
 
     public function render()
     {
